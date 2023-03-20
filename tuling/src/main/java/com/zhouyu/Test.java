@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -18,6 +19,7 @@ import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
@@ -32,9 +34,18 @@ public class Test {
 
 		// 创建一个Spring容器
 		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		//ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
 
 		UserService userService = (UserService) applicationContext.getBean("userService");
-		userService.test();
+		//UserService userService = (UserService) applicationContext.getBean("userService");
+
+		System.out.println(userService);
+		System.out.println(applicationContext.getBean("userService"));
+
+//		System.out.println(applicationContext.getBean("userService1"));
+//		System.out.println(applicationContext.getBean("userService2"));
+//		userService.test();
+		//userService.test();
 
 
 //		UserService userService1 = new UserService();

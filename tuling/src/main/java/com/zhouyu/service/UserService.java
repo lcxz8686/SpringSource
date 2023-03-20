@@ -19,14 +19,23 @@ import java.util.Date;
 @Component
 public class UserService {
 
-	@Autowired
 	private OrderService orderService;
 
-	public void test(){
-		System.out.println(orderService);
+//	public UserService() {
+//		System.out.println("1");
+//	}
+
+	public UserService(OrderService orderService) {
+  		this.orderService = orderService;
+		System.out.println("2");
 	}
 
 
+//	public UserService(OrderService orderService1, OrderService orderService2) {
+//		System.out.println("3");
+//	}
 
-
+//	public void test(){
+//		System.out.println(orderService);
+//	}
 }

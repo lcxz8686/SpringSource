@@ -1,6 +1,7 @@
 package com.zhouyu;
 
 import com.zhouyu.service.OrderService;
+import com.zhouyu.service.UserService;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -16,9 +17,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @ComponentScan("com.zhouyu")
-@EnableScheduling
-@PropertySource("classpath:spring.properties")
+//@EnableScheduling
+//@PropertySource("classpath:spring.properties")
 public class AppConfig {
+
+	@Bean
+	public OrderService orderService1(){
+		return new OrderService();
+	}
+
+	@Bean
+	public OrderService orderService2(){
+		return new OrderService();
+	}
 
 //	@Bean
 //	public JdbcTemplate jdbcTemplate() {
