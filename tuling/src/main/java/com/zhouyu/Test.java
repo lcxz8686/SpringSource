@@ -33,14 +33,14 @@ public class Test {
 	public static void main(String[] args) {
 
 		// 创建一个Spring容器
-		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		//ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
 
-		UserService userService = (UserService) applicationContext.getBean("userService");
+		UserService userService = (UserService) context.getBean("userService");
 		//UserService userService = (UserService) applicationContext.getBean("userService");
 
 		System.out.println(userService);
-		System.out.println(applicationContext.getBean("userService"));
+		System.out.println(context.getBean("userService"));
 
 //		System.out.println(applicationContext.getBean("userService1"));
 //		System.out.println(applicationContext.getBean("userService2"));
