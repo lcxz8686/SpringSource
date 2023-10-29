@@ -4,6 +4,8 @@ import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -19,23 +21,12 @@ import java.util.Date;
 @Component
 public class UserService {
 
-	private OrderService orderService;
+	@Autowired
+	private ApplicationContext applicationContext;
 
-//	public UserService() {
-//		System.out.println("1");
-//	}
-
-	public UserService(OrderService orderService) {
-  		this.orderService = orderService;
-		System.out.println("2");
+	public void publish() {
+		applicationContext.publishEvent("123");
+		System.out.println("test");
 	}
 
-
-//	public UserService(OrderService orderService1, OrderService orderService2) {
-//		System.out.println("3");
-//	}
-
-//	public void test(){
-//		System.out.println(orderService);
-//	}
 }

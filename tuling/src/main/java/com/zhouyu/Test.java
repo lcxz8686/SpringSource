@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AbstractPointcutAdvisor;
+import org.springframework.asm.ClassReader;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,21 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.NestedIOException;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.io.Resource;
 
 import javax.annotation.PostConstruct;
+import java.beans.PropertyEditorSupport;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -32,15 +41,33 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		// ÂàõÂª∫‰∏Ä‰∏™SpringÂÆπÂô®
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-		//ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+		UserService userService = (UserService)context.getBean("userService");
+		userService.publish();
 
-		UserService userService = (UserService) context.getBean("userService");
+//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+//		System.out.println(context.getBean("&harmonyFactoryBean"));
+//		System.out.println(context.getBean("harmonyFactoryBean"));
+
+
+//		StringToUserPropertyEditor propertyEditor = new StringToUserPropertyEditor();
+//		PropertyEditorSupport propertyEditorSupport = new PropertyEditorSupport("fds");
+//
+//		propertyEditorSupport.setAsText("sdfds");
+//		User value = (User) propertyEditorSupport.getValue();
+//		System.out.println(value);
+
+		// ¥¥Ω®“ª∏ˆSpring»›∆˜
+//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+//		UserService userService = (UserService) context.getBean("userService");
+//		userService.test();
+
+//		System.out.println(userService);
+//		System.out.println(context.getBean("userService"));
+
+		//ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
 		//UserService userService = (UserService) applicationContext.getBean("userService");
 
-		System.out.println(userService);
-		System.out.println(context.getBean("userService"));
 
 //		System.out.println(applicationContext.getBean("userService1"));
 //		System.out.println(applicationContext.getBean("userService2"));
@@ -77,10 +104,10 @@ public class Test {
 //			@Nullable
 //			@Override
 //			public Object invoke(@NotNull MethodInvocation invocation) throws Throwable {
-//				System.out.println("ÂàáÈù¢ÈÄªËæë before...");
+//				System.out.println("«–√Ê¬ﬂº≠ before...");
 //				Object result = invocation.proceed();
 ////				Object result = invocation.getMethod().invoke(invocation.getThis(), invocation.getArguments());
-//				System.out.println("ÂàáÈù¢ÈÄªËæë after...");
+//				System.out.println("«–√Ê¬ﬂº≠ after...");
 //				return result;
 //			}
 //		});
@@ -89,10 +116,3 @@ public class Test {
 
 	}
 }
-
-
-
-
-
-
-
