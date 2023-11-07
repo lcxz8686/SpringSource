@@ -41,6 +41,7 @@ public class Test {
 
 	public static void main(String[] args) {
 
+		// 扫描、创建非懒加载的单例Bean
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		UserService userService = (UserService)context.getBean("userService");
 		userService.publish();

@@ -85,7 +85,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 				return beanName;
 			}
 		}
-		// Fallback: generate a unique default bean name.
+		// Fallback: generate a unique default bean name (Component注解，没有指定名称)
 		return buildDefaultBeanName(definition, registry);
 	}
 
@@ -106,6 +106,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 					Set<String> result = amd.getMetaAnnotationTypes(key);
 					return (result.isEmpty() ? Collections.emptySet() : result);
 				});
+				// 判断这个注解是不是 @Component
 				if (isStereotypeWithNameValue(type, metaTypes, attributes)) {
 					Object value = attributes.get("value");
 					if (value instanceof String) {

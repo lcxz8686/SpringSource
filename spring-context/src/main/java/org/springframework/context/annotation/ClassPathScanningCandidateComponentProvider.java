@@ -434,6 +434,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				}
 				if (resource.isReadable()) {
 					try {
+						// ASM技术，获取该类的 元数据读取器
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
 						// excludeFilters、includeFilters判断
 						if (isCandidateComponent(metadataReader)) { // @Component-->includeFilters判断
@@ -496,6 +497,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 * @return whether the class qualifies as a candidate component
 	 */
 	protected boolean isCandidateComponent(MetadataReader metadataReader) throws IOException {
+		// 这个类是否被排除过滤器指定？
 		for (TypeFilter tf : this.excludeFilters) {
 			if (tf.match(metadataReader, getMetadataReaderFactory())) {
 				return false;
