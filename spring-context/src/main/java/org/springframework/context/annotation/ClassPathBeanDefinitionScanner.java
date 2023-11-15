@@ -257,12 +257,13 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 	}
 
 	/**
-	 * Perform a scan within the specified base packages,
-	 * returning the registered bean definitions.
-	 * <p>This method does <i>not</i> register an annotation config processor
-	 * but rather leaves this up to the caller.
-	 * @param basePackages the packages to check for annotated classes
-	 * @return set of beans registered if any for tooling registration purposes (never {@code null})
+	 * 扫描 - 核心
+	 * 在指定的基础包中执行扫描，返回已注册的 Bean 定义。
+	 * 此方法不注册注释配置处理器，而是将其留给调用方。
+	 * 形参:
+	 * basePackages – 要检查带注释的类的包
+	 * 返回值:
+	 * 为工具注册目的注册的一组 bean（如果有）（从不 null）
 	 */
 	protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
 		Assert.notEmpty(basePackages, "At least one base package must be specified");
@@ -277,6 +278,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 				ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(candidate);
 				candidate.setScope(scopeMetadata.getScopeName());
 
+				// 生成beanName，假如@Component里面没有设置值，就是默认的用上面的candidate里的name（驼峰）
 				String beanName = this.beanNameGenerator.generateBeanName(candidate, this.registry);
 
 				if (candidate instanceof AbstractBeanDefinition) {

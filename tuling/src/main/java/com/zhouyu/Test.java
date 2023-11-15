@@ -25,7 +25,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.NestedIOException;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.io.Resource;
-
 import javax.annotation.PostConstruct;
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;

@@ -75,6 +75,13 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	private final Map<String, Set<String>> metaAnnotationTypesCache = new ConcurrentHashMap<>();
 
 
+	/**
+	 * @Component
+	 * @param definition the bean definition to generate a name for
+	 * @param registry the bean definition registry that the given definition
+	 * is supposed to be registered with
+	 * @return
+	 */
 	@Override
 	public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
 		if (definition instanceof AnnotatedBeanDefinition) {

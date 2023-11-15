@@ -312,10 +312,12 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 * @return a corresponding Set of autodetected bean definitions
 	 */
 	public Set<BeanDefinition> findCandidateComponents(String basePackage) {
+		// 索引
 		if (this.componentsIndex != null && indexSupportsIncludeFilters()) {
 			return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
 		}
 		else {
+			// 基本上走这里
 			return scanCandidateComponents(basePackage);
 		}
 	}
@@ -424,10 +426,12 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 			String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
 					resolveBasePackage(basePackage) + '/' + this.resourcePattern;
 
+			// 解析出一个个class文件的File对象
 			Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
 
 			boolean traceEnabled = logger.isTraceEnabled();
 			boolean debugEnabled = logger.isDebugEnabled();
+			// 遍历读取出来的class
 			for (Resource resource : resources) {
 				if (traceEnabled) {
 					logger.trace("Scanning " + resource);
@@ -436,11 +440,13 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 					try {
 						// ASM技术，获取该类的 元数据读取器
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
-						// excludeFilters、includeFilters判断
+						// 过滤器 excludeFilters、includeFilters判断
 						if (isCandidateComponent(metadataReader)) { // @Component-->includeFilters判断
+							// 构造一个 BeanDefinition（目前只 set BeanName）
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setSource(resource);
 
+							// 顶级类和静态内部类，非接口，非抽象类
 							if (isCandidateComponent(sbd)) {
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);
@@ -507,6 +513,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 		// 符合includeFilters的会进行条件匹配，通过了才是Bean，也就是先看有没有@Component，再看是否符合@Conditional
 		for (TypeFilter tf : this.includeFilters) {
 			if (tf.match(metadataReader, getMetadataReaderFactory())) {
+				// 条件匹配
 				return isConditionMatch(metadataReader);
 			}
 		}
