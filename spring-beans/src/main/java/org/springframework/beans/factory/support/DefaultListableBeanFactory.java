@@ -940,6 +940,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			// 获取合并后的BeanDefinition
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 
+			// 是否是单例、是否是非懒加载
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
 				if (isFactoryBean(beanName)) {
 					// 获取FactoryBean对象
@@ -963,15 +964,16 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					}
 				}
 				else {
-					// 创建Bean对象
+					// 创建Bean对象，可以根据beanName，获取合并后的BeanDefinition
 					getBean(beanName);
 				}
 			}
 		}
 
-		// 所有的非懒加载单例Bean都创建完了后
+		// 所有的非懒加载单例Bean都创建完了后！！遍历所有的单例Bean
 		// Trigger post-initialization callback for all applicable beans...
 		for (String beanName : beanNames) {
+			// 当所有的非懒加载的单例bean创建完成之后，都会放到单例池中
 			Object singletonInstance = getSingleton(beanName);
 			if (singletonInstance instanceof SmartInitializingSingleton) {
 				StartupStep smartInitialize = this.getApplicationStartup().start("spring.beans.smart-initialize")
@@ -984,6 +986,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					}, getAccessControlContext());
 				}
 				else {
+					//
 					smartSingleton.afterSingletonsInstantiated();
 				}
 				smartInitialize.end();
